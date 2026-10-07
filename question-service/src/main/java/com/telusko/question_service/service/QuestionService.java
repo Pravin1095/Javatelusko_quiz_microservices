@@ -1,7 +1,10 @@
 package com.telusko.question_service.service;
 
 
+import com.sun.net.httpserver.HttpsServer;
 import com.telusko.question_service.model.Question;
+import com.telusko.question_service.model.QuestionWrapper;
+import com.telusko.question_service.model.Response;
 import com.telusko.question_service.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,5 +51,32 @@ public class QuestionService {
             e.printStackTrace();
         }
         return new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseEntity<List<Integer>> getQuestionsForQuiz(String categoryName, int numQuestions) {
+        List<Integer> questions = questionRepo.findRandomQuestionsByCategory(categoryName, numQuestions);
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<QuestionWrapper>> getQuestionsById(List<Integer> questionIds) {
+        List<QuestionWrapper> questionwrapper = new ArrayList<>();
+        for(Integer q : questionIds){
+            Question question = questionRepo.findById(q).get();
+            QuestionWrapper qw = new QuestionWrapper(question.getId(), question.getQuestionTitle(),question.getOption1(),question.getOption2(),question.getOption3(),question.getOption4());
+            questionwrapper.add(qw);
+        }
+        return new ResponseEntity<>(questionwrapper, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Integer> getScore(List<Response> responses) {
+        int rightAns = 0;
+        for(Response res : responses){
+            Question question = questionRepo.findById(res.getId()).get();
+            if(res.getResponse().equals(question.getRightAnswer())){
+                rightAns+=1;
+            }
+
+        }
+        return new ResponseEntity<>(rightAns, HttpStatus.OK);
     }
 }
