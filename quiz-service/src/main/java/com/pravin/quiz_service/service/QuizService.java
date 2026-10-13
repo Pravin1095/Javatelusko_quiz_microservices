@@ -1,5 +1,6 @@
 package com.pravin.quiz_service.service;
 
+import com.pravin.quiz_service.feign.QuizInterface;
 import com.pravin.quiz_service.model.Question;
 import com.pravin.quiz_service.model.QuestionWrapper;
 import com.pravin.quiz_service.model.Quiz;
@@ -20,15 +21,21 @@ public class QuizService {
     @Autowired
     QuizRepository quizRepo;
 
+    @Autowired
+    QuizInterface quizinterface;
+
 //
     public ResponseEntity<String> createQuiz(String category, int numQ, String title){
-//        List<Question> questions =
+        List<Integer> questions = quizinterface.getQuestionsForQuiz(category, numQ).getBody(); //getBody() because we are returning ResponseEntity but we need only List<Integer>
+
+                Quiz quiz = new Quiz();
+        quiz.setTitle(title);
+        quiz.setQuestionIds(questions);
+        quizRepo.save(quiz);
+
         //call the /generate url http://localhost:8080/question/generate in question-service using RestTemplate(However, it has limitations such as hardcoded url http://localhost:8080 and so on).Hence, To interact with the 2nd service we use "Feign Client" and to discover the question service we need a Service Registery which is "Eureka Server" (Refer the doc Need_of_service_discovery for more details
-//
-//        Quiz quiz = new Quiz();
-//        quiz.setTitle(title);
-//        quiz.setQuestions(questions);
-//        quizRepo.save(quiz);
+
+
 
         return new ResponseEntity<>("success", HttpStatus.CREATED);
     }
