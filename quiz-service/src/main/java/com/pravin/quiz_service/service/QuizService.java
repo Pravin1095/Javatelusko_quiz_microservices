@@ -23,7 +23,7 @@ public class QuizService {
 //
     public ResponseEntity<String> createQuiz(String category, int numQ, String title){
 //        List<Question> questions =
-        //call the /generate url http://localhost:8080/question/generate in question-service using RestTemplate. To interact with the 2nd service we use "Feign Client" and to discover the question service we need a Service Registery which is "Eureka Server"
+        //call the /generate url http://localhost:8080/question/generate in question-service using RestTemplate(However, it has limitations such as hardcoded url http://localhost:8080 and so on).Hence, To interact with the 2nd service we use "Feign Client" and to discover the question service we need a Service Registery which is "Eureka Server" (Refer the doc Need_of_service_discovery for more details
 //
 //        Quiz quiz = new Quiz();
 //        quiz.setTitle(title);
