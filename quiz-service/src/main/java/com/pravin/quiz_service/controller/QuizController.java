@@ -2,6 +2,7 @@ package com.pravin.quiz_service.controller;
 
 import com.pravin.quiz_service.model.QuestionWrapper;
 import com.pravin.quiz_service.model.Response;
+import com.pravin.quiz_service.model.QuizDto;
 import com.pravin.quiz_service.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,11 @@ public class QuizController {
     @Autowired
     QuizService quizService;
 
-//    @PostMapping("create")
-//    public ResponseEntity<String> createQuiz(@RequestParam String category, @RequestParam int numQ, @RequestParam String title){
-//        return quizService.createQuiz(category, numQ, title);
-//    }
+    @PostMapping("create")
+    public ResponseEntity<String> createQuiz(@RequestBody QuizDto quizdto){
+        System.out.println();
+        return quizService.createQuiz(quizdto.getCategory(),quizdto.getNumQ(),quizdto.getTitle());
+    }
 //
 //    @GetMapping("get/{id}")
 //    public ResponseEntity<List<QuestionWrapper>> getQuestions(@PathVariable Integer id){

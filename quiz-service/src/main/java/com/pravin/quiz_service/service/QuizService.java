@@ -21,16 +21,17 @@ public class QuizService {
     QuizRepository quizRepo;
 
 //
-//    public ResponseEntity<String> createQuiz(String category, int numQ, String title){
-//        List<Question> questions = questionRepo.findRandomQuestionsByCategory(category, numQ);
+    public ResponseEntity<String> createQuiz(String category, int numQ, String title){
+//        List<Question> questions =
+        //call the /generate url http://localhost:8080/question/generate in question-service using RestTemplate. To interact with the 2nd service we use "Feign Client" and to discover the question service we need a Service Registery which is "Eureka Server"
 //
 //        Quiz quiz = new Quiz();
 //        quiz.setTitle(title);
 //        quiz.setQuestions(questions);
 //        quizRepo.save(quiz);
-//
-//        return new ResponseEntity<>("success", HttpStatus.CREATED);
-//    }
+
+        return new ResponseEntity<>("success", HttpStatus.CREATED);
+    }
 
 //    public ResponseEntity<List<QuestionWrapper>> getQuestions(Integer id) {
 //        Optional<Quiz> quiz = quizRepo.findById(id);
